@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       index: true,
-      match: /^\d{8,15}$/,
+      match: /^01[0125]\d{8}$/,
     },
     passwordHash: {
       type: String,

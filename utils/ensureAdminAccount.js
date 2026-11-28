@@ -25,7 +25,7 @@ export const ensureAdminAccount = async () => {
 
   if (!isValidPhone(phone) || !isFourDigitPassword(password)) {
     throw new Error(
-      "Invalid admin credentials: ADMIN_PHONE must be 8-15 digits and ADMIN_PASSWORD exactly 4 digits."
+      "Invalid admin credentials: ADMIN_PHONE must be a valid Egyptian number (11 digits starting with 010, 011, 012 or 015) and ADMIN_PASSWORD exactly 4 digits."
     );
   }
 

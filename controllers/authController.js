@@ -31,7 +31,10 @@ export const register = async (req, res, next) => {
     }
 
     if (!isValidPhone(phone)) {
-      throw badRequest("VALIDATION", "Phone number must contain 8 to 15 digits.");
+      throw badRequest(
+        "VALIDATION",
+        "Phone number must be a valid Egyptian number: 11 digits starting with 010, 011, 012 or 015."
+      );
     }
 
     if (!isFourDigitPassword(password)) {

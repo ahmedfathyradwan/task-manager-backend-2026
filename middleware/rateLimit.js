@@ -1,6 +1,11 @@
 import { HttpError } from "../utils/httpError.js";
 
-export const createRateLimiter = ({ windowMs, max, scope }) => {
+export const createRateLimiter = ({
+  windowMs,
+  max,
+  scope,
+  skipSuccessfulRequests = false,
+}) => {
   const hits = new Map();
 
   const sweep = setInterval(() => {
@@ -14,6 +19,13 @@ export const createRateLimiter = ({ windowMs, max, scope }) => {
   return (req, res, next) => {
     const key = `${scope}:${req.ip}`;
     const now = Date.now();
+
+    if (skipSuccessfulRequests) {
+      res.on("finish", () => {
+        if (res.statusCode < 400) hits.delete(key);
+      });
+    }
+
     const entry = hits.get(key);
 
     if (!entry || entry.resetAt <= now) {

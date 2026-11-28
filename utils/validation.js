@@ -11,10 +11,14 @@ export const normalizeDigits = (value) =>
 
 export const normalizePhone = (value) => {
   if (typeof value !== "string") return "";
-  return toLatinDigits(value).replace(/\D/g, "").slice(0, 15);
+  let phone = toLatinDigits(value).replace(/\D/g, "");
+  if (phone.startsWith("0020") && phone.length >= 14) phone = phone.slice(4);
+  else if (phone.startsWith("20") && phone.length >= 12) phone = phone.slice(2);
+  if (phone.length === 10 && phone.startsWith("1")) phone = `0${phone}`;
+  return phone.slice(0, 11);
 };
 
-export const isValidPhone = (phone) => /^\d{8,15}$/.test(phone);
+export const isValidPhone = (phone) => /^01[0125]\d{8}$/.test(phone);
 
 export const isFourDigitPassword = (value) =>
   typeof value === "string" && /^\d{4}$/.test(value);

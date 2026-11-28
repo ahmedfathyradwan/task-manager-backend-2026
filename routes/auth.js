@@ -9,6 +9,7 @@ const authLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
   max: 25,
   scope: "auth",
+  skipSuccessfulRequests: true,
 });
 
 router.post("/register", authLimiter, register);
