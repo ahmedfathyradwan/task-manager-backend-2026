@@ -72,7 +72,7 @@ const PORT = process.env.PORT || 5000;
 const startServer = async () => {
   try {
     if (!process.env.MONGO_URI) {
-      throw new Error("MONGO_URI is not defined in .env");
+      throw new Error("MONGO_URI is not defined in the environment.");
     }
     getJwtSecret();
 
